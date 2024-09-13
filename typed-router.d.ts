@@ -20,18 +20,7 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[...all]': RouteRecordInfo<'/[...all]', '/:all(.*)', { all: ParamValue<true> }, { all: ParamValue<false> }>,
-    '/about': RouteRecordInfo<'/about', '/about', Record<never, never>, Record<never, never>>,
-    '/example/': RouteRecordInfo<'/example/', '/example', Record<never, never>, Record<never, never>>,
-    '/example/audio-context': RouteRecordInfo<'/example/audio-context', '/example/audio-context', Record<never, never>, Record<never, never>>,
-    '/example/echarts': RouteRecordInfo<'/example/echarts', '/example/echarts', Record<never, never>, Record<never, never>>,
-    '/example/naive-ui': RouteRecordInfo<'/example/naive-ui', '/example/naive-ui', Record<never, never>, Record<never, never>>,
-    '/example/pixi-js': RouteRecordInfo<'/example/pixi-js', '/example/pixi-js', Record<never, never>, Record<never, never>>,
-    '/example/threejs': RouteRecordInfo<'/example/threejs', '/example/threejs', Record<never, never>, Record<never, never>>,
-    '/example/use-i-speech-synthesis': RouteRecordInfo<'/example/use-i-speech-synthesis', '/example/use-i-speech-synthesis', Record<never, never>, Record<never, never>>,
-    '/example/use-i-web-sockets': RouteRecordInfo<'/example/use-i-web-sockets', '/example/use-i-web-sockets', Record<never, never>, Record<never, never>>,
-    '/example/use-number-animation': RouteRecordInfo<'/example/use-number-animation', '/example/use-number-animation', Record<never, never>, Record<never, never>>,
-    '/example/use-pdf-js': RouteRecordInfo<'/example/use-pdf-js', '/example/use-pdf-js', Record<never, never>, Record<never, never>>,
-    '/example/use-user-media': RouteRecordInfo<'/example/use-user-media', '/example/use-user-media', Record<never, never>, Record<never, never>>,
-    '/example/use-web-rtc': RouteRecordInfo<'/example/use-web-rtc', '/example/use-web-rtc', Record<never, never>, Record<never, never>>,
+    '/directory': RouteRecordInfo<'/directory', '/directory', Record<never, never>, Record<never, never>>,
+    '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
   }
 }

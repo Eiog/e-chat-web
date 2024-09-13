@@ -2,7 +2,6 @@ import { resolve } from 'node:path'
 import process from 'node:process'
 import { webUpdateNotice } from '@plugin-web-update-notification/vite'
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
 import postcssPresetEnv from 'postcss-preset-env'
 import Unocss from 'unocss/vite'
 import Icons from 'unplugin-icons/vite'
@@ -19,8 +18,7 @@ import { vitePluginVersionMark } from 'vite-plugin-version-mark'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import Layouts from 'vite-plugin-vue-layouts'
 import WebfontDownload from 'vite-plugin-webfont-dl'
-import { VitePluginAutoImport, VitePluginComponents, VitePluginI18n, VitePluginMarkdown, VitePluginPWA } from './config'
-import { VitePluginMock } from './plugin'
+import { VitePluginAutoImport, VitePluginComponents, VitePluginI18n, VitePluginPWA } from './config'
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   const { VITE_DEV_PORT, VITE_API_BASE_PREFIX, VITE_API_BASE_URL, VITE_BASE, BUILD_ENV } = loadEnv(mode, process.cwd(), '')
@@ -31,7 +29,6 @@ export default defineConfig(({ command, mode }) => {
       vue({
         include: [/\.vue$/, /\.md$/],
       }), // https://github.com/vitejs/vite-plugin-vue
-      vueJsx(), // https://github.com/vitejs/vite-plugin-vue
       Unocss(), // https://github.com/antfu/unocss
       Icons({ compiler: 'vue3' }), // https://github.com/antfu/unplugin-icons
       VueRouter({
@@ -49,7 +46,6 @@ export default defineConfig(({ command, mode }) => {
       // virtual({
       //   'virtual:module': 'export default { mode: \'web\' }',
       // }), // https://github.com/patak-dev/vite-plugin-virtual Vite5 type=module 报错
-      VitePluginMock({ prefix: VITE_API_BASE_PREFIX }),
       createSvgIconsPlugin({
         iconDirs: [resolve(process.cwd(), 'src/assets/icons')],
         symbolId: 'icon-[dir]-[name]',
@@ -80,7 +76,6 @@ export default defineConfig(({ command, mode }) => {
       ...VitePluginAutoImport(),
       ...VitePluginComponents(),
       ...VitePluginI18n(),
-      ...VitePluginMarkdown(),
       ...VitePluginPWA({ command, mode }),
     ],
     clearScreen: true,
