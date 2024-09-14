@@ -12,8 +12,8 @@ const options: DropdownOption[] = [
     key: 'info',
     type: 'render',
     render() {
-      return h('div', { class: 'w-160px flex-y-center gap-3 p-3' }, [
-        h(NAvatar, { round: true, size: 'large', src: userInfo.value?.avatar }),
+      return h('div', { class: 'w-200px flex-y-center gap-3 p-3' }, [
+        h(NAvatar, { round: true, size: 60, src: userInfo.value?.avatar }),
         h('div', { class: 'flex-col' }, [
           h('span', { class: 'text-md' }, { default: () => userInfo.value?.nickname ?? userInfo.value?.account }),
           h('span', { class: 'text-xs text-black/50' }, { default: () => userInfo.value?.account }),
@@ -83,7 +83,7 @@ const options: DropdownOption[] = [
             <n-dropdown trigger="click" :options="options">
               <NAvatar
                 round
-                size="medium"
+                :size="collapsed ? 40 : 50"
                 :src="userInfo?.avatar"
               >
                 <i class="i-mage-user" />

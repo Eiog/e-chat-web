@@ -11,6 +11,7 @@ export interface UserFindType {
     success: boolean
     message: string
     list: (UserDocument & { _id: string })[]
+    count: number
   }
 }
 export interface UserUpdateType {

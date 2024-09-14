@@ -1,5 +1,6 @@
 <script setup lang='ts'>
 import type { UserFindType } from '~/api/user.api'
+import UserFind from '~/components/UserFind.vue'
 
 type UserItem = UserFindType['Res']['list'][0]
 defineOptions({
@@ -20,18 +21,27 @@ async function handleClick(item: UserItem) {
   await nextTick()
   active.value = item
 }
+function handleAddFriend() {
+  window.$dialog.create({
+    title: '添加好友',
+    style: 'width:auto',
+    content() {
+      return h(UserFind, {})
+    },
+  })
+}
 </script>
 
 <template>
   <div class="wh-full flex">
-    <div class="h-full w-[260px] flex-col gap-[20px] p-[10px]">
+    <div class="h-full w-[260px] flex-col gap-[10px] p-[10px]">
       <div class="w-full flex gap-[5px]">
         <n-input placeholder="搜索">
           <template #prefix>
             <i class="i-mage-search" />
           </template>
         </n-input>
-        <n-button>
+        <n-button @click="handleAddFriend">
           <template #icon>
             <i class="i-mage-plus" />
           </template>
@@ -39,11 +49,11 @@ async function handleClick(item: UserItem) {
       </div>
       <n-spin class="w-full flex-1" :show="loading">
         <n-scrollbar class="w-full">
-          <div class="w-full flex-col">
+          <div class="w-full flex-col gap-[5px]">
             <div
               v-for="item in data?.list"
               :key="item._id"
-              class="w-full flex-y-center gap-[10px] rounded-md p-[10px] transition-base hover:bg-black/5"
+              class="w-full flex-y-center cursor-pointer gap-[10px] rounded-md p-[10px] transition-base hover:bg-black/5"
               :class="active?._id === item._id ? 'bg-black/5' : 'bg-transparent'"
               @click="handleClick(item)"
             >

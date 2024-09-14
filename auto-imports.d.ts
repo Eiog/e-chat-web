@@ -737,7 +737,6 @@ declare module 'vue' {
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTrack: UnwrapRef<typeof import('./src/composables/useTrack')['useTrack']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
-    readonly useTyped: UnwrapRef<typeof import('./src/composables/useTyped')['default']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserDisplayMedia: UnwrapRef<typeof import('./src/composables/useUserDisplayMedia')['useUserDisplayMedia']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
