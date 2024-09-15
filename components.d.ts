@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppBar: typeof import('./src/components/AppBar.vue')['default']
+    ApplyFriend: typeof import('./src/components/ApplyFriend.vue')['default']
     BackButton: typeof import('./src/components/BackButton.vue')['default']
     BaseAppBar: typeof import('./src/components/BaseAppBar.vue')['default']
     Blank: typeof import('./src/layouts/blank.vue')['default']
@@ -19,6 +20,7 @@ declare module 'vue' {
     MagicalEffects: typeof import('./src/components/MagicalEffects.vue')['default']
     NaiveProvider: typeof import('./src/components/NaiveProvider.vue')['default']
     NAvatar: typeof import('naive-ui')['NAvatar']
+    NBadge: typeof import('naive-ui')['NBadge']
     NButton: typeof import('naive-ui')['NButton']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDropdown: typeof import('naive-ui')['NDropdown']

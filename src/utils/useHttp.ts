@@ -35,6 +35,11 @@ axiosInstance.interceptors.request.use(
     // TODO 比如 loading 等
     if (!NProgress.isStarted())
       NProgress.start()
+
+    const { token } = useAppStore()
+    if (token)
+      config.headers.Authorization = `Bearer ${token}`
+
     return config
   },
   (error: AxiosError) => {

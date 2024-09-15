@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import type { UserFindType } from '~/api/user.api'
-import UserFind from '~/components/UserFind.vue'
+import ApplyFriend from '~/components/ApplyFriend.vue'
 
 type UserItem = UserFindType['Res']['list'][0]
 defineOptions({
@@ -14,7 +14,7 @@ definePage({
     icon: 'i-mage-checklist-note',
   },
 })
-const { data, loading } = useRequest(() => userApi.find({}))
+const { data, loading } = useRequest(() => userApi.friend({}))
 const active = ref<UserItem>()
 async function handleClick(item: UserItem) {
   active.value = undefined
@@ -26,7 +26,7 @@ function handleAddFriend() {
     title: '添加好友',
     style: 'width:auto',
     content() {
-      return h(UserFind, {})
+      return h(ApplyFriend, {})
     },
   })
 }

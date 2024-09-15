@@ -1,5 +1,5 @@
 import md5 from 'md5'
-import type { UserDocument } from '~server/db/models/user.model'
+import type { UserFindDocument } from '~server/db/models/user.model'
 
 export interface LoginType {
   Data: {
@@ -10,7 +10,7 @@ export interface LoginType {
     success: boolean
     message: string
     token: string
-    user: UserDocument
+    user: UserFindDocument
   }
 }
 export interface StatusType {
@@ -21,13 +21,13 @@ export interface StatusType {
     success: boolean
     message: string
     token: string
-    user: UserDocument
+    user: UserFindDocument
   }
 }
 const token = ref<string>()
 const logged = ref(false)
 const refreshed = ref(false)
-const userInfo = ref<UserDocument>()
+const userInfo = ref<UserFindDocument>()
 function login({ account, password }: LoginType['Data']): Promise<LoginType['Res']> {
   return new Promise((resolve, reject) => {
     post<LoginType['Res']>('/login', { account, password: md5(password) }).then((result) => {

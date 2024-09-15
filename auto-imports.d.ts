@@ -192,6 +192,7 @@ declare global {
   const useCached: typeof import('@vueuse/core')['useCached']
   const useCanvas: typeof import('./src/composables/useCanvas')['useCanvas']
   const useChangeTitle: typeof import('./src/composables/useChangeTitle')['useChangeTitle']
+  const useChatStore: typeof import('./src/stores/useChatStore')['useChatStore']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
@@ -363,6 +364,7 @@ declare global {
   const useWebRtcAnswer: typeof import('./src/composables/useWebRTC')['useWebRtcAnswer']
   const useWebRtcOffer: typeof import('./src/composables/useWebRTC')['useWebRtcOffer']
   const useWebSocket: typeof import('@vueuse/core')['useWebSocket']
+  const useWebSocketStore: typeof import('./src/stores/useWebSocketStore')['useWebSocketStore']
   const useWebSockets: typeof import('./src/composables/useWebSockets')['useWebSockets']
   const useWebWorker: typeof import('@vueuse/core')['useWebWorker']
   const useWebWorkerFn: typeof import('@vueuse/core')['useWebWorkerFn']
@@ -586,6 +588,7 @@ declare module 'vue' {
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useCanvas: UnwrapRef<typeof import('./src/composables/useCanvas')['useCanvas']>
     readonly useChangeTitle: UnwrapRef<typeof import('./src/composables/useChangeTitle')['useChangeTitle']>
+    readonly useChatStore: UnwrapRef<typeof import('./src/stores/useChatStore')['useChatStore']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
@@ -635,7 +638,6 @@ declare module 'vue' {
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
     readonly useI18n: UnwrapRef<typeof import('vue-i18n')['useI18n']>
     readonly useISpeechSynthesis: UnwrapRef<typeof import('./src/composables/useISpeechSynthesis')['useISpeechSynthesis']>
-    readonly useIWebSockets: UnwrapRef<typeof import('./src/composables/useIWebSockets')['useIWebSockets']>
     readonly useIdle: UnwrapRef<typeof import('@vueuse/core')['useIdle']>
     readonly useImage: UnwrapRef<typeof import('@vueuse/core')['useImage']>
     readonly useImageVerify: UnwrapRef<typeof import('./src/composables/useImageVerify')['default']>
@@ -750,6 +752,7 @@ declare module 'vue' {
     readonly useWebRtcAnswer: UnwrapRef<typeof import('./src/composables/useWebRTC')['useWebRtcAnswer']>
     readonly useWebRtcOffer: UnwrapRef<typeof import('./src/composables/useWebRTC')['useWebRtcOffer']>
     readonly useWebSocket: UnwrapRef<typeof import('@vueuse/core')['useWebSocket']>
+    readonly useWebSockets: UnwrapRef<typeof import('./src/composables/useWebSockets')['useWebSockets']>
     readonly useWebWorker: UnwrapRef<typeof import('@vueuse/core')['useWebWorker']>
     readonly useWebWorkerFn: UnwrapRef<typeof import('@vueuse/core')['useWebWorkerFn']>
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>

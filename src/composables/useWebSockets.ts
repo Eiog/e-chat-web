@@ -12,7 +12,7 @@ interface Options {
   manual?: boolean
 }
 type DataType = string | ArrayBufferLike | Blob | ArrayBufferView
-export function useIWebSockets<T extends DataType>(url: string | URL, options?: Options) {
+export function useWebSockets<T extends DataType>(url: string | URL, options?: Options) {
   const { protocols, manual = false } = options ?? {}
   let socket: WebSocket | null = null
   const status = ref<State>('PENDING')
@@ -23,7 +23,7 @@ export function useIWebSockets<T extends DataType>(url: string | URL, options?: 
       status.value = ReadyState[socket.readyState]
     }
   }
-  function connect() {
+  function connect(protocols?: string | string[]) {
     socket = new WebSocket(url, protocols)
     socket.addEventListener('open', onOpen)
     socket.addEventListener('message', onMessage)
@@ -31,7 +31,7 @@ export function useIWebSockets<T extends DataType>(url: string | URL, options?: 
     socket.addEventListener('error', onError)
   }
   if (!manual) {
-    connect()
+    connect(protocols)
   }
   function send(data: DataType) {
     if (socket) {

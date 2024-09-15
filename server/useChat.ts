@@ -43,15 +43,19 @@ export class UseChat {
     }
     const { path, port } = this.options
     this.wss = new WebSocketServer({ path, port }, () => {
-      console.log(`server is running at http://127.0.0.1:${port}${path}`)
+      console.log(`socket is running at http://127.0.0.1:${port}${path}`)
     })
     this.wss.on('connection', this.onConnection.bind(this))
     this.wss.on('error', this.onError.bind(this))
   }
 
   onConnection(socket: WebSocket, request: IncomingMessage) {
-    const _id = nanoid()
     const headers = request.headers
+    const _id = headers['sec-websocket-protocol']?.replace('_id-', '')
+    if (!_id) {
+      socket.close()
+      return
+    }
     this.connections.set(socket, { _id, headers })
     this.broadcast({
       type: 'system',

@@ -15,6 +15,12 @@ export interface UserDocument {
   deletedAt: Date
   lastLoginAt: Date
 }
+export type UserFindDocument = UserDocument & {
+  createdAt: string
+  updatedAt: string
+  deletedAt: string
+  lastLoginAt: string
+}
 export const UserModel = model<UserDocument>('User', new Schema(
   {
     account: { type: String, required: true },

@@ -65,6 +65,7 @@ const options: DropdownOption[] = [
     },
   },
 ]
+const { status } = storeToRefs(useChatStore())
 </script>
 
 <template>
@@ -81,13 +82,15 @@ const options: DropdownOption[] = [
         <div class="w-full flex-1">
           <div class="h-[60px] w-full flex items-center justify-center overflow-hidden">
             <n-dropdown trigger="click" :options="options">
-              <NAvatar
-                round
-                :size="collapsed ? 40 : 50"
-                :src="userInfo?.avatar"
-              >
-                <i class="i-mage-user" />
-              </NAvatar>
+              <n-badge dot :offset="[-5, 40]" :type="status === 'OPEN' ? 'success' : 'error'">
+                <NAvatar
+                  round
+                  :size="collapsed ? 40 : 50"
+                  :src="userInfo?.avatar"
+                >
+                  <i class="i-mage-user" />
+                </NAvatar>
+              </n-badge>
             </n-dropdown>
           </div>
           <n-menu

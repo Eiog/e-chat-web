@@ -1,10 +1,10 @@
 <script setup lang='ts'>
 import { deepClone } from 'mixte'
-import type { UserDocument } from '~server/db/models/user.model'
+import type { UserFindDocument } from '~server/db/models'
 import type { UserUpdateType } from '~/api/user.api'
 
 const props = defineProps<{
-  data?: UserDocument
+  data?: UserFindDocument
 }>()
 const emit = defineEmits<{
   (e: 'submit'): void

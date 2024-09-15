@@ -7,7 +7,7 @@ import type { DecodeOptions, JwtPayload, SignOptions, VerifyOptions } from 'json
 const jwtKey = process.env.PRIVATE_KEY ?? nanoid()
 const cryptoKey = process.env.CRYPTO_KEY ?? nanoid(32)
 const cryptoIv = process.env.CRYPTO_IV ?? nanoid(16)
-const encrypt = true
+const encrypt = false
 export function aesEncrypt(data: string) {
   const cipher = createCipheriv('aes-256-cbc', cryptoKey, cryptoIv)
   return (cipher.update(data, 'utf8', 'hex') + cipher.final('hex'))

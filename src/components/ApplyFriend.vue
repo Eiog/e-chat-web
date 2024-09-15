@@ -11,8 +11,15 @@ watch(param, () => {
 }, {
   deep: true,
 })
-function handleAdd(id: string) {
-  console.log(id)
+
+async function handleAddFriend(id: string) {
+  try {
+    const { message } = await userApi.applyFriend({ _targetId: id })
+    window.$message.success(message)
+  }
+  catch {
+
+  }
 }
 </script>
 
@@ -38,7 +45,7 @@ function handleAdd(id: string) {
                 </p>
               </div>
               <div class="flex items-center justify-center">
-                <n-button size="small" strong secondary circle @click="handleAdd(item._id)">
+                <n-button size="small" strong secondary circle @click="handleAddFriend(item._id)">
                   <template #icon>
                     <i class="i-mage-plus" />
                   </template>
