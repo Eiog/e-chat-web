@@ -20,6 +20,7 @@ export type UserFindDocument = UserDocument & {
   updatedAt: string
   deletedAt: string
   lastLoginAt: string
+  added: boolean
 }
 export const UserModel = model<UserDocument>('User', new Schema(
   {

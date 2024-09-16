@@ -51,6 +51,9 @@ export const userApi = {
   update(data: UserUpdateType['Data']) {
     return post<UserUpdateType['Res']>('/user/update', { ...data, password: data.password ? md5(data.password) : undefined })
   },
+  searchFriend(data: UserFindType['Data']) {
+    return post<UserFindType['Res']>('/user/search-friend', data)
+  },
   applyFriend(data: ApplyFriendType['Data']) {
     return post<ApplyFriendType['Res']>('/user/apply-friend', data)
   },

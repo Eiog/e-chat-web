@@ -57,7 +57,9 @@ function handleAddFriend() {
               :class="active?._id === item._id ? 'bg-black/5' : 'bg-transparent'"
               @click="handleClick(item)"
             >
-              <n-avatar :src="item.avatar" size="large" round />
+              <n-avatar :src="item.avatar" size="large" round object-fit="cover">
+                <i v-if="!item.avatar" class="i-mage-user" />
+              </n-avatar>
               <div class="flex-col">
                 <p class="text-md">
                   {{ item.nickname ?? item.account }}
@@ -76,7 +78,9 @@ function handleAddFriend() {
       <Transition name="fade" mode="out-in">
         <div v-if="active" class="relative wh-full bg-cover bg-no-repeat" :style="{ backgroundImage: `url(${active.avatar})` }">
           <div class="wh-full flex-col-center gap-[20px] bg-white/90 backdrop-blur-xl">
-            <n-avatar :src="active.avatar" :size="120" round />
+            <n-avatar :src="active.avatar" :size="120" round object-fit="cover">
+              <i v-if="!active.avatar" class="i-mage-user text-5xl" />
+            </n-avatar>
             <div class="flex-col-center">
               <p class="text-2xl">
                 {{ active.nickname ?? active.account }}

@@ -33,7 +33,7 @@
     "@vueuse/core": "^11.0.3",
     "axios": "^1.7.7",
     "colord": "^2.9.3",
-    "cropperjs": "^1.6.2",
+    "cropperjs": "2.0.0-rc.2",
     "crypto-js": "^4.2.0",
     "file-saver": "^2.0.5",
     "jsonwebtoken": "^9.0.2",

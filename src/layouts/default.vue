@@ -13,7 +13,9 @@ const options: DropdownOption[] = [
     type: 'render',
     render() {
       return h('div', { class: 'w-200px flex-y-center gap-3 p-3' }, [
-        h(NAvatar, { round: true, size: 60, src: userInfo.value?.avatar }),
+        h(NAvatar, { round: true, size: 60, src: userInfo.value?.avatar, objectFit: 'cover' }, {
+          default: () => userInfo.value?.avatar ? null : h('i', { class: 'i-mage-user text-2xl' }),
+        }),
         h('div', { class: 'flex-col' }, [
           h('span', { class: 'text-md' }, { default: () => userInfo.value?.nickname ?? userInfo.value?.account }),
           h('span', { class: 'text-xs text-black/50' }, { default: () => userInfo.value?.account }),
@@ -82,15 +84,19 @@ const { status } = storeToRefs(useChatStore())
         <div class="w-full flex-1">
           <div class="h-[60px] w-full flex items-center justify-center overflow-hidden">
             <n-dropdown trigger="click" :options="options">
-              <n-badge dot :offset="[-5, 40]" :type="status === 'OPEN' ? 'success' : 'error'">
-                <NAvatar
-                  round
-                  :size="collapsed ? 40 : 50"
-                  :src="userInfo?.avatar"
-                >
-                  <i class="i-mage-user" />
-                </NAvatar>
-              </n-badge>
+              <div class="flex-y-center gap-[5px]">
+                <n-badge dot :offset="[-5, 40]" :type="status === 'OPEN' ? 'success' : 'error'">
+                  <NAvatar
+                    class="transition-base!"
+                    round
+                    object-fit="cover"
+                    :size="collapsed ? 40 : 50"
+                    :src="userInfo?.avatar"
+                  >
+                    <i v-if="!userInfo?.avatar" class="i-mage-user" />
+                  </NAvatar>
+                </n-badge>
+              </div>
             </n-dropdown>
           </div>
           <n-menu

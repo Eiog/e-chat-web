@@ -3,7 +3,7 @@ import { number, object, string } from 'zod'
 import { FriendModel, UserModel } from '../db/models'
 import { paramsError } from '../helps'
 import { $limit, $page, $string2ObjectId, $unwind } from './pipeline'
-import { $friendProject, $userProject } from './user.pipeline'
+import { $friendProject, $friendSearchProject, $userProject } from './user.pipeline'
 import type { FriendFindDocument, UserFindDocument } from '../db/models'
 
 const router = createRouter()
@@ -91,10 +91,132 @@ router.post('/user/find', eventHandler(async (handler) => {
   return {
     success: true,
     message: '查询成功',
-    list: list.map((m) => {
-      m.avatar = `https://picsum.photos/200?s=${m._id}`
-      return m
-    }),
+    list,
+    count,
+  }
+}))
+router.post('/user/search-friend', eventHandler(async (event) => {
+  const body = await readValidatedBody(event, object({
+    page: number().optional().default(1),
+    limit: number().optional().default(10),
+    query: string().optional().default(''),
+  }).safeParse)
+  if (!body.success) {
+    throw paramsError(body)
+  }
+  const _id = $string2ObjectId(event.context._id)
+  const { page, limit, query } = body.data
+  const { list, count } = (await UserModel.aggregate<{ list: UserFindDocument[], count: number }>([
+    {
+      $sort: {
+        createdAt: -1,
+      },
+    },
+    {
+      $match: {
+        $or: [
+          {
+            account: {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+          {
+            nickname: {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+        ],
+        $and: [
+          {
+            deleted: false,
+          },
+          {
+            _id: { $ne: _id },
+          },
+        ],
+      },
+    },
+    {
+      $facet: {
+        list: [
+          {
+            $lookup: {
+              from: 'friend-approvals',
+              let: {
+                id: '$_id',
+              },
+              pipeline: [
+                {
+                  $match: {
+                    $expr: {
+                      $or: [
+                        {
+                          $eq: ['$_fromId', '$$id'],
+                        },
+                        {
+                          $eq: ['$_targetId', '$$id'],
+                        },
+                      ],
+                    },
+                  },
+                },
+                {
+                  $match: {
+                    $or: [
+                      {
+                        _fromId: _id,
+                      },
+                      {
+                        _targetId: _id,
+                      },
+                    ],
+                  },
+                },
+              ],
+              as: 'friends',
+            },
+          },
+          {
+            $addFields: {
+              added: {
+                $cond: {
+                  if: {
+                    $eq: [
+                      { $ifNull: ['$friends', []] },
+                      [],
+                    ],
+                  },
+                  then: false,
+                  else: true,
+                },
+              },
+            },
+          },
+          $page(page, limit),
+          $limit(limit),
+          $friendSearchProject,
+        ],
+        count: [
+          {
+            $count: 'count',
+          },
+        ],
+      },
+    },
+    $unwind('$count'),
+    {
+      $project: {
+        list: '$list',
+        count: '$count.count',
+      },
+    },
+  ]))[0]
+  return {
+    success: true,
+    message: '查询成功',
+    list,
     count,
   }
 }))
@@ -126,7 +248,7 @@ router.post('/user/friend', eventHandler(async (event) => {
   if (!body.success) {
     throw paramsError(body)
   }
-  const _fromId = event.context._id
+  const _id = $string2ObjectId(event.context._id)
 
   const { page, limit, query } = body.data
   const { list, count } = (await FriendModel.aggregate<{ list: FriendFindDocument[], count: number }>([
@@ -137,14 +259,21 @@ router.post('/user/friend', eventHandler(async (event) => {
     },
     {
       $match: {
-        $and: [
-          {
-            deleted: false,
-          },
-          {
-            _fromId: $string2ObjectId(_fromId),
-          },
-        ],
+        $expr: {
+          $or: [
+            {
+              _fromId: _id,
+            },
+            {
+              _targetId: _id,
+            },
+          ],
+        },
+      },
+    },
+    {
+      $match: {
+        deleted: false,
       },
     },
     {
@@ -153,10 +282,33 @@ router.post('/user/friend', eventHandler(async (event) => {
           {
             $lookup: {
               from: 'users',
-              localField: '_targetId',
-              foreignField: '_id',
-              as: 'users',
+              let: {
+                fromId: '$_fromId',
+                targetId: '$_targetId',
+                id: _id,
+              },
               pipeline: [
+                {
+                  $match: {
+                    $expr: {
+                      $cond: {
+                        if: { $eq: ['$$id', '$$fromId'] },
+                        then: {
+                          $eq: ['$_id', '$$targetId'],
+                        },
+                        else: {
+                          $cond: {
+                            if: { $eq: ['$$id', '$$targetId'] },
+                            then: {
+                              $eq: ['$_id', '$$fromId'],
+                            },
+                            else: false,
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
                 {
                   $match: {
                     $or: [
@@ -173,18 +325,24 @@ router.post('/user/friend', eventHandler(async (event) => {
                         },
                       },
                     ],
-                    $and: [
-                      {
-                        deleted: false,
-                      },
-                    ],
+                  },
+                },
+                {
+                  $match: {
+                    deleted: false,
                   },
                 },
                 $userProject,
               ],
+              as: 'users',
             },
           },
           $unwind('$users'),
+          {
+            $match: {
+              users: { $exists: true },
+            },
+          },
           $page(page, limit),
           $limit(limit),
           $friendProject,
@@ -207,10 +365,7 @@ router.post('/user/friend', eventHandler(async (event) => {
   return {
     success: true,
     message: '查询成功',
-    list: list.map((m) => {
-      m.avatar = `https://picsum.photos/200?s=${m._targetId}`
-      return m
-    }),
+    list,
     count,
   }
 }))

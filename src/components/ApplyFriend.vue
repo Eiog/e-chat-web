@@ -5,7 +5,7 @@ const param = ref({
   limit: 10,
   query: '',
 })
-const { data, loading, refresh } = useRequest(() => userApi.find(param.value))
+const { data, loading, refresh } = useRequest(() => userApi.searchFriend(param.value))
 watch(param, () => {
   refresh()
 }, {
@@ -35,7 +35,9 @@ async function handleAddFriend(id: string) {
               :key="item._id"
               class="w-full flex flex-y-center cursor-pointer gap-[5px] rounded-md p-[10px] transition-base hover:bg-black/5"
             >
-              <n-avatar :src="item.avatar" size="large" />
+              <n-avatar :src="item.avatar" size="large" object-fit="cover">
+                <i v-if="!item.avatar" class="i-mage-user text-xl" />
+              </n-avatar>
               <div class="min-w-0 flex-col flex-1">
                 <p class="text-base">
                   {{ item.nickname ?? item.account }}
@@ -45,10 +47,11 @@ async function handleAddFriend(id: string) {
                 </p>
               </div>
               <div class="flex items-center justify-center">
-                <n-button size="small" strong secondary circle @click="handleAddFriend(item._id)">
-                  <template #icon>
+                <n-button size="small" strong secondary :circle="!item.added" :disabled="item.added" @click="handleAddFriend(item._id)">
+                  <template v-if="!item.added" #icon>
                     <i class="i-mage-plus" />
                   </template>
+                  <span v-if="item.added">已添加</span>
                 </n-button>
               </div>
             </div>

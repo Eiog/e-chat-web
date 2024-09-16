@@ -200,6 +200,7 @@ declare global {
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCopyCode: typeof import('./src/composables/useCopyCode')['useCopyCode']
   const useCounter: typeof import('@vueuse/core')['useCounter']
+  const useCropper: typeof import('./src/composables/useCropper')['useCropper']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVar: typeof import('@vueuse/core')['useCssVar']
   const useCssVars: typeof import('vue')['useCssVars']
@@ -596,6 +597,7 @@ declare module 'vue' {
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCopyCode: UnwrapRef<typeof import('./src/composables/useCopyCode')['useCopyCode']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
+    readonly useCropper: UnwrapRef<typeof import('./src/composables/useCropper')['useCropper']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVar: UnwrapRef<typeof import('@vueuse/core')['useCssVar']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
