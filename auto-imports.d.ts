@@ -19,6 +19,7 @@ declare global {
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const baseApi: typeof import('./src/api/base.api')['baseApi']
+  const chatApi: typeof import('./src/api/chat.api')['chatApi']
   const clearLocal: typeof import('./src/utils/useStorage')['clearLocal']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
@@ -416,6 +417,7 @@ declare module 'vue' {
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly chatApi: UnwrapRef<typeof import('./src/api/chat.api')['chatApi']>
     readonly clearLocal: UnwrapRef<typeof import('./src/utils/useStorage')['clearLocal']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>

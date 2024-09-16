@@ -3,10 +3,11 @@
 import { createServer } from 'node:http'
 import process from 'node:process'
 import { createApp, createError, defineEventHandler, toNodeListener, useBase } from 'h3'
+import chatApi from './api/chat.api'
 import loginApi from './api/login.api'
 import userApi from './api/user.api'
 import { dbConnect } from './db'
-import { getToken } from './helps'
+import { getToken, isObjectId } from './helps'
 import { verify } from './jwt'
 import { UseChat } from './useChat'
 
@@ -34,6 +35,14 @@ app.use(defineEventHandler(async (event) => {
           message: 'Token无效',
         })
       }
+      const _id = jwt._id
+      if (!isObjectId(_id)) {
+        throw createError({
+          status: 401,
+          statusMessage: 'No Permission',
+          message: '_id验证错误',
+        })
+      }
       event.context._id = jwt._id
     }
   }
@@ -47,6 +56,7 @@ app.use(defineEventHandler(async (event) => {
 }))
 app.use(useBase('/api', userApi.handler))
 app.use(useBase('/api', loginApi.handler))
+app.use(useBase('/api', chatApi.handler))
 dbConnect()
 const _ = new UseChat()
 const server = createServer(toNodeListener(app))

@@ -5,9 +5,10 @@ const param = ref({
   limit: 10,
   query: '',
 })
-const { data, loading, refresh } = useRequest(() => userApi.searchFriend(param.value))
-watch(param, () => {
-  refresh()
+const { data, loading, refresh } = useRequest(() => userApi.searchFriend(param.value), { manual: true })
+watch(param, (v) => {
+  if (v.query)
+    refresh()
 }, {
   deep: true,
 })
@@ -25,10 +26,10 @@ async function handleAddFriend(id: string) {
 
 <template>
   <div class="h-[400px] w-[500px] flex-col gap-[10px]">
-    <SearchInput v-model:value="param.query" />
+    <SearchInput v-model:value="param.query" search-button />
     <div class="min-h-0 w-full flex-1">
       <n-spin class="wh-full" content-class="wh-full" :show="loading">
-        <n-scrollbar v-if="data" class="wh-full">
+        <n-scrollbar v-if="data && data.list.length > 0" class="wh-full">
           <div class="wh-full flex-col gap-[5px]">
             <div
               v-for="item in data?.list"

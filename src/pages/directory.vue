@@ -14,7 +14,17 @@ definePage({
     icon: 'i-mage-checklist-note',
   },
 })
-const { data, loading } = useRequest(() => userApi.friend({}))
+const param = ref({
+  page: 1,
+  limit: 10,
+  query: '',
+})
+const { data, loading, refresh } = useRequest(() => userApi.friend(param.value))
+watch(param, () => {
+  refresh()
+}, {
+  deep: true,
+})
 const active = ref<UserItem>()
 async function handleClick(item: UserItem) {
   active.value = undefined
@@ -30,25 +40,29 @@ function handleAddFriend() {
     },
   })
 }
+async function handleCreateMessage(id: string, type: 'message' | 'video' | 'audio') {
+  try {
+    await chatApi.createChat({ _targetId: id, type })
+  }
+  catch {
+
+  }
+}
 </script>
 
 <template>
   <div class="wh-full flex">
     <div class="h-full w-[260px] flex-col gap-[10px] p-[10px]">
       <div class="w-full flex gap-[5px]">
-        <n-input placeholder="搜索">
-          <template #prefix>
-            <i class="i-mage-search" />
-          </template>
-        </n-input>
+        <SearchInput v-model:value="param.query" />
         <n-button @click="handleAddFriend">
           <template #icon>
             <i class="i-mage-plus" />
           </template>
         </n-button>
       </div>
-      <n-spin class="w-full flex-1" :show="loading">
-        <n-scrollbar class="w-full">
+      <n-spin class="min-h-0 w-full flex-1" content-class="wh-full" :show="loading">
+        <n-scrollbar v-if="data && data.list.length > 0" class="w-full">
           <div class="w-full flex-col gap-[5px]">
             <div
               v-for="item in data?.list"
@@ -71,6 +85,9 @@ function handleAddFriend() {
             </div>
           </div>
         </n-scrollbar>
+        <div v-else class="wh-full flex items-center justify-center">
+          <n-empty />
+        </div>
       </n-spin>
     </div>
     <div class="h-full w-[1px] bg-black/5" />
@@ -90,7 +107,7 @@ function handleAddFriend() {
               </p>
             </div>
             <div class="flex gap-[20px]">
-              <n-button type="primary" circle size="large">
+              <n-button type="primary" circle size="large" @click="handleCreateMessage(active._id, 'message')">
                 <template #icon>
                   <i class="i-mage-message" />
                 </template>

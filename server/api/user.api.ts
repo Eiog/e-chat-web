@@ -1,7 +1,7 @@
 import { createRouter, eventHandler, readValidatedBody } from 'h3'
 import { number, object, string } from 'zod'
 import { FriendModel, UserModel } from '../db/models'
-import { paramsError } from '../helps'
+import { isObjectId, paramsError } from '../helps'
 import { $limit, $page, $string2ObjectId, $unwind } from './pipeline'
 import { $friendProject, $friendSearchProject, $userProject } from './user.pipeline'
 import type { FriendFindDocument, UserFindDocument } from '../db/models'
@@ -9,7 +9,7 @@ import type { FriendFindDocument, UserFindDocument } from '../db/models'
 const router = createRouter()
 router.post('/user/update', eventHandler(async (handler) => {
   const body = await readValidatedBody(handler, object({
-    _id: string({ required_error: '缺少id' }),
+    _id: string({ required_error: '缺少id' }).refine(v => isObjectId(v)),
     account: string().optional(),
     nickname: string().optional(),
     password: string().optional(),
@@ -222,7 +222,7 @@ router.post('/user/search-friend', eventHandler(async (event) => {
 }))
 router.post('/user/apply-friend', eventHandler(async (event) => {
   const body = await readValidatedBody(event, object({
-    _targetId: string({ required_error: '缺少id' }),
+    _targetId: string({ required_error: '缺少id' }).refine(v => isObjectId(v)),
   }).safeParse)
   if (!body.success) {
     throw paramsError(body)

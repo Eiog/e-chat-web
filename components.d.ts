@@ -48,7 +48,6 @@ declare module 'vue' {
     TabBar: typeof import('./src/components/TabBar.vue')['default']
     ToggleDarkMode: typeof import('./src/components/ToggleDarkMode.vue')['default']
     ToggleLanguage: typeof import('./src/components/ToggleLanguage.vue')['default']
-    UserFind: typeof import('./src/components/UserFind.vue')['default']
     UserForm: typeof import('./src/components/UserForm.vue')['default']
     Vue3_3Demo: typeof import('./src/components/Vue3_3Demo.vue')['default']
   }

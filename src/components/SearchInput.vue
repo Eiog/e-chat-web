@@ -1,13 +1,25 @@
 <script setup lang='ts'>
-const props = defineProps<{
+import { debounce } from 'radash'
+
+const props = withDefaults(defineProps<{
   value?: string
-}>()
+  autoTrigger?: boolean
+  searchButton?: boolean
+}>(), {
+  autoTrigger: true,
+})
 const emit = defineEmits<{
   (e: 'update:value', v: typeof props.value): void
 }>()
 const _value = ref(props.value)
 watch(() => props.value, (v) => {
   _value.value = v
+})
+const debounceEmit = debounce({ delay: 500 }, () => {
+  emit('update:value', _value.value)
+})
+watch(_value, () => {
+  debounceEmit()
 })
 function handleClick() {
   emit('update:value', _value.value)
@@ -26,7 +38,7 @@ function handleKeyDown(e: KeyboardEvent) {
         <i class="i-mage-search" />
       </template>
     </n-input>
-    <n-button @click="handleClick">
+    <n-button v-if="props.searchButton" @click="handleClick">
       <template #icon>
         <i class="i-mage-search" />
       </template>
