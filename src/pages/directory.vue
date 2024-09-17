@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <script setup lang='ts'>
 import type { UserFindType } from '~/api/user.api'
 import ApplyFriend from '~/components/ApplyFriend.vue'
@@ -41,6 +42,8 @@ function handleAddFriend() {
   })
 }
 async function handleCreateMessage(id: string, type: 'message' | 'video' | 'audio') {
+  console.log(type)
+
   try {
     await chatApi.createChat({ _targetId: id, type })
   }
