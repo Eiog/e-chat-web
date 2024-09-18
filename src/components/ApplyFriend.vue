@@ -43,7 +43,7 @@ async function handleAddFriend(id: string) {
                 <p class="text-base">
                   {{ item.nickname ?? item.account }}
                 </p>
-                <p class="text-xs text-black/50">
+                <p class="text-xs text-black/50 dark:text-white/20">
                   {{ item.account }}
                 </p>
               </div>

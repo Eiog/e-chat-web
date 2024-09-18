@@ -12,7 +12,7 @@ export interface FriendDocument {
   deletedAt: Date
 }
 export type FriendFindDocument = FriendDocument & UserFindDocument & {
-
+  _userId: string
 }
 export const FriendModel = model<FriendDocument>('friend-approvals', new Schema(
   {

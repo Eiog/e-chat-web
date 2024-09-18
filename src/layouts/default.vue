@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type DropdownOption, NAvatar } from 'naive-ui'
 import UserForm from '~/components/UserForm.vue'
+import UserSetting from '~/components/UserSetting.vue'
 
 const router = useRouter()
 const { logout } = useLogin()
@@ -18,11 +19,10 @@ const options: DropdownOption[] = [
         }),
         h('div', { class: 'flex-col' }, [
           h('span', { class: 'text-md' }, { default: () => userInfo.value?.nickname ?? userInfo.value?.account }),
-          h('span', { class: 'text-xs text-black/50' }, { default: () => userInfo.value?.account }),
+          h('span', { class: 'text-xs text-black/50 dark:text-white/20' }, { default: () => userInfo.value?.account }),
         ]),
       ])
     },
-
   },
   {
     key: 'header-divider',
@@ -48,6 +48,23 @@ const options: DropdownOption[] = [
                 dialog.destroy()
               },
             })
+          },
+        })
+      },
+    },
+  },
+  {
+    key: 'setting',
+    label: '系统设置',
+    icon() {
+      return h('i', { class: 'i-mage-settings' })
+    },
+    props: {
+      onClick() {
+        window.$dialog.create({
+          title: '系统设置',
+          content() {
+            return h(UserSetting)
           },
         })
       },
@@ -85,12 +102,12 @@ const { status } = storeToRefs(useChatStore())
           <div class="h-[60px] w-full flex items-center justify-center overflow-hidden">
             <n-dropdown trigger="click" :options="options">
               <div class="flex-y-center gap-[5px]">
-                <n-badge dot :offset="[-5, 40]" :type="status === 'OPEN' ? 'success' : 'error'">
+                <n-badge dot :offset="[-5, 35]" :type="status === 'OPEN' ? 'success' : 'error'">
                   <NAvatar
                     class="transition-base!"
                     round
                     object-fit="cover"
-                    :size="collapsed ? 40 : 50"
+                    :size="collapsed ? 36 : 46"
                     :src="userInfo?.avatar"
                   >
                     <i v-if="!userInfo?.avatar" class="i-mage-user" />

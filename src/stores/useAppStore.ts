@@ -3,12 +3,13 @@ import { defineStore } from 'pinia'
 export const useAppStore = defineStore(
   'appStore',
   () => {
-    const { language, toggle } = useLanguage()
+    const { language, toggle, setLanguage } = useLanguage()
     const { value: collapsed, toggle: toggleCollapsed } = useBoolean(false)
     const { token, logged, refreshed, userInfo } = useLogin()
     return {
       language,
       toggle,
+      setLanguage,
       collapsed,
       toggleCollapsed,
       token,
@@ -20,7 +21,7 @@ export const useAppStore = defineStore(
   {
     persist: {
       key: '__E_CHAT-APP_STORE_PERSIST__',
-      pick: ['collapsed', 'token', 'logged'],
+      pick: ['language', 'collapsed', 'token', 'logged'],
     },
   },
 )

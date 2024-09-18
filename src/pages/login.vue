@@ -48,7 +48,7 @@ async function handleValidate() {
 
 <template>
   <div class="wh-full flex-col-center">
-    <div class="window-bg h-[400px] w-[300px] flex-col-center border rounded-xl p-[20px] shadow-2xl shadow-black/5">
+    <div class="window-bg h-[400px] w-[300px] flex-col-center border rounded-xl p-[20px] shadow-2xl shadow-black/5 dark:brightness-75">
       <div class="h-[120px] w-[120px] flex-col-center overflow-hidden rounded-full bg-white">
         <SvgIcon name="boluo" :width="6" :height="6" />
       </div>

@@ -9,20 +9,38 @@ interface Options {
   port?: number
 }
 interface User {
-  id: string
+  _id: string
   name: string
 }
-interface MessageReceive {
-  user?: User
+export type MessageType = 'text' | 'video' | 'audio' | 'image'
+export type MessageStatus = 'success' | 'error' | 'pending'
+type MessageMethod = 'connect' | 'close' | 'error' | 'message' | 'message-status'
+// 收到
+export interface MessageReceive {
+  _id: string
+  type: MessageType
+  status: MessageStatus
+  subType: 'receive' | 'dispatch'
+  _targetId: string
   target?: User
   content: string
+  createAt: Date
 }
-interface MessageDispatch {
-  type: 'system' | 'message'
-  status: 'error' | 'success'
-  user?: User
+// 返回
+export interface MessageDispatch {
+  method: MessageMethod
+  status: MessageStatus
+  payload: {
+    messageType: MessageType
+    subType: 'receive' | 'dispatch'
+    content: string
+  }
+  _id: string
+  _fromId: string
+  from?: User
+  _targetId: string
   target?: User
-  content: string
+  createAt: Date
   extra?: {
     [key: string]: any
     _id?: string
@@ -51,68 +69,101 @@ export class UseChat {
 
   onConnection(socket: WebSocket, request: IncomingMessage) {
     const headers = request.headers
-    const _id = headers['sec-websocket-protocol']?.replace('_id-', '')
-    if (!_id) {
+    const _fromId = headers['sec-websocket-protocol']?.replace('_id-', '')
+    if (!_fromId) {
       socket.close()
       return
     }
-    this.connections.set(socket, { _id, headers })
+    this.connections.set(socket, { _id: _fromId, headers })
     this.broadcast({
-      type: 'system',
+      method: 'connect',
       status: 'success',
-      target: {
-        id: _id,
-        name: _id,
+      payload: {
+        messageType: 'text',
+        subType: 'receive',
+        content: `${_fromId}-connected`,
       },
-      content: `client connected ${_id}`,
-    })
-    this.sendMessage(socket, {
-      type: 'system',
-      status: 'success',
-      content: 'connect ok',
+      _id: _fromId,
+      _fromId,
+      _targetId: _fromId,
+      createAt: new Date(),
     })
     socket.on('close', () => {
       this.connections.delete(socket)
       this.broadcast({
-        type: 'system',
+        method: 'close',
         status: 'success',
-        target: {
-          id: _id,
-          name: _id,
+        payload: {
+          messageType: 'text',
+          subType: 'receive',
+          content: `${_fromId}-connected`,
         },
-        content: `client disconnected ${_id}`,
+        _id: _fromId,
+        _fromId,
+        _targetId: _fromId,
+        createAt: new Date(),
       })
     })
     socket.on('message', (data) => {
-      const { user, target, content } = JSON.parse(data.toString()) as MessageReceive
-      const targetMap = Array.from(this.connections).find(([_, { _id }]) => _id === target?.id)
+      const { _id, type, _targetId, content, createAt } = JSON.parse(data.toString()) as MessageReceive
+      const targetMap = Array.from(this.connections).find(([_, { _id }]) => _id === _targetId)
       if (targetMap) {
         const targetSocket = targetMap[0]
         this.sendMessage(targetSocket, {
-          type: 'message',
+          method: 'message',
           status: 'success',
-          user,
-          target,
-          content,
+          payload: {
+            messageType: type,
+            subType: 'receive',
+            content,
+          },
+          _id,
+          _fromId,
+          _targetId,
+          createAt,
         }).then(() => {
           this.sendMessage(socket, {
-            type: 'system',
+            method: 'message-status',
             status: 'success',
-            content: 'send ok',
+            payload: {
+              messageType: type,
+              subType: 'receive',
+              content: 'send ok',
+            },
+            _id,
+            _fromId,
+            _targetId,
+            createAt,
           })
         }).catch((err) => {
           this.sendMessage(socket, {
-            type: 'system',
+            method: 'message-status',
             status: 'error',
-            content: `socket send error${JSON.stringify(err)}`,
+            payload: {
+              messageType: type,
+              subType: 'receive',
+              content: `socket send error${JSON.stringify(err)}`,
+            },
+            _id,
+            _fromId,
+            _targetId,
+            createAt,
           })
         })
       }
       else {
         this.sendMessage(socket, {
-          type: 'system',
+          method: 'message-status',
           status: 'error',
-          content: 'target not found',
+          payload: {
+            messageType: type,
+            subType: 'receive',
+            content: 'target not found',
+          },
+          _id,
+          _fromId,
+          _targetId,
+          createAt,
         })
       }
     })

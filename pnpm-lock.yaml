@@ -11,6 +11,9 @@ importers:
       '@better-scroll/core':
         specifier: ^2.5.1
         version: 2.5.1
+      '@emoji-mart/data':
+        specifier: ^1.2.1
+        version: 1.2.1
       '@unhead/vue':
         specifier: ^1.11.1
         version: 1.11.1(vue@3.5.3(typescript@5.5.4))
@@ -32,6 +35,9 @@ importers:
       crypto-js:
         specifier: ^4.2.0
         version: 4.2.0
+      emoji-mart:
+        specifier: ^5.6.0
+        version: 5.6.0
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -91,6 +97,9 @@ importers:
         specifier: ^0.0.3
         version: 0.0.3
       '@iconify-json/mage':
+        specifier: ^1.2.0
+        version: 1.2.0
+      '@iconify-json/solar':
         specifier: ^1.2.0
         version: 1.2.0
       '@intlify/unplugin-vue-i18n':
@@ -1453,6 +1462,9 @@ packages:
   '@eiog/ts-config@0.0.3':
     resolution: {integrity: sha512-Y1FHTnAz4JipYZWWcCmhkoVHm+xuOMlUMIfpaIgcQEMktAN0aybTT+hWKSEUHI/iuNnKByl2iV5Au3KavpnDHA==}
 
+  '@emoji-mart/data@1.2.1':
+    resolution: {integrity: sha512-no2pQMWiBy6gpBEiqGeU77/bFejDqUTRY7KX+0+iur13op3bqUsXdnwoZs6Xb1zbv0gAj5VvS1PWoUUckSr5Dw==}
+
   '@emotion/hash@0.8.0':
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
 
@@ -1796,6 +1808,9 @@ packages:
 
   '@iconify-json/mage@1.2.0':
     resolution: {integrity: sha512-s6hT2K52tM5oKAHo0qjm8ZUAPgRElxa4LiLH7GNZotJoXC3LDzRAB76Z/5HKEASoUwbtMidhcwFYF7AVZQfCBQ==}
+
+  '@iconify-json/solar@1.2.0':
+    resolution: {integrity: sha512-xMspRoN2S2Op8mgjZHgiMJq2Xqo5oVlBp/1NICTeMByfePpkEKF67Fwh5KdBRF+SBey/cNLhjkTuHmKeSIEkog==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -3568,6 +3583,9 @@ packages:
 
   electron-to-chromium@1.5.18:
     resolution: {integrity: sha512-1OfuVACu+zKlmjsNdcJuVQuVE61sZOLbNM4JAQ1Rvh6EOj0/EUKhMJjRH73InPlXSh8HIJk1cVZ8pyOV/FMdUQ==}
+
+  emoji-mart@5.6.0:
+    resolution: {integrity: sha512-eJp3QRe79pjwa+duv+n7+5YsNhRcMl812EcFVwrnRvYKoNPoQb5qxU8DG6Bgwji0akHdp6D4Ln6tYLG58MFSow==}
 
   emoji-regex@10.4.0:
     resolution: {integrity: sha512-EC+0oUMY1Rqm4O6LLrgjtYDvcVYTy7chDnM4Q7030tP4Kwj3u/pR6gP9ygnp2CJMK5Gq+9Q2oqmrFJAz01DXjw==}
@@ -9178,6 +9196,8 @@ snapshots:
 
   '@eiog/ts-config@0.0.3': {}
 
+  '@emoji-mart/data@1.2.1': {}
+
   '@emotion/hash@0.8.0': {}
 
   '@es-joy/jsdoccomment@0.48.0':
@@ -9379,6 +9399,10 @@ snapshots:
   '@humanwhocodes/retry@0.3.0': {}
 
   '@iconify-json/mage@1.2.0':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/solar@1.2.0':
     dependencies:
       '@iconify/types': 2.0.0
 
@@ -11517,6 +11541,8 @@ snapshots:
       jake: 10.9.2
 
   electron-to-chromium@1.5.18: {}
+
+  emoji-mart@5.6.0: {}
 
   emoji-regex@10.4.0: {}
 
