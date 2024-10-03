@@ -1,7 +1,7 @@
-import { createError, getHeader } from 'h3'
-import { isObjectIdOrHexString } from 'mongoose'
 import type { EventHandlerRequest, H3Event } from 'h3'
 import type { SafeParseReturnType } from 'zod'
+import { createError, getHeader } from 'h3'
+import { isObjectIdOrHexString } from 'mongoose'
 
 export function paramsError(body: SafeParseReturnType<any, any>) {
   return createError({

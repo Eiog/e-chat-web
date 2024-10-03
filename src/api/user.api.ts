@@ -1,5 +1,5 @@
-import md5 from 'md5'
 import type { FriendFindDocument, UserFindDocument } from '~server/db/models'
+import md5 from 'md5'
 
 export interface UserFindType {
   Data: {

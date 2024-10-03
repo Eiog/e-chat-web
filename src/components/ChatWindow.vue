@@ -37,7 +37,7 @@ function handleKeyDown(ev: KeyboardEvent) {
           </div>
         </div>
         <div class="flex-y-center gap-[10px]">
-          <n-button type="success" circle size="small" strong secondary>
+          <n-button type="success" size="small" strong secondary circle>
             <template #icon>
               <i class="i-mage-phone" />
             </template>

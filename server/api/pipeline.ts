@@ -1,5 +1,5 @@
-import { Types } from 'mongoose'
 import type { PipelineStage } from 'mongoose'
+import { Types } from 'mongoose'
 
 export function $timeProject(fields: { [field: string]: any }) {
   return {

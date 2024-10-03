@@ -1,8 +1,8 @@
+import type { FriendFindDocument } from '~server/db/models'
+import type { MessageDispatch, MessageReceive, MessageType } from '../../server/useChat'
 import { nanoid } from 'nanoid'
 import { defineStore } from 'pinia'
-import type { FriendFindDocument } from '~server/db/models'
 import { router } from '~/modules'
-import type { MessageDispatch, MessageReceive, MessageType } from '../../server/useChat'
 
 const SOCKET_URL = import.meta.env.VITE_API_SOCKET_URL || ''
 interface Chat {

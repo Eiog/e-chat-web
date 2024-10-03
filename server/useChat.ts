@@ -1,8 +1,8 @@
+import type { IncomingMessage } from 'node:http'
+import type { WebSocket } from 'ws'
 /* eslint-disable no-console */
 import { nanoid } from 'nanoid'
 import { WebSocketServer } from 'ws'
-import type { IncomingMessage } from 'node:http'
-import type { WebSocket } from 'ws'
 
 interface Options {
   path?: string

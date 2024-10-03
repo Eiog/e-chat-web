@@ -1,5 +1,5 @@
-import { model, Schema } from 'mongoose'
 import type { UserFindDocument } from './'
+import { model, Schema } from 'mongoose'
 
 export interface FriendDocument {
   _id: Schema.Types.ObjectId

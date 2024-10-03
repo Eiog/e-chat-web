@@ -1,5 +1,5 @@
-import md5 from 'md5'
 import type { UserFindDocument } from '~server/db/models/user.model'
+import md5 from 'md5'
 
 export interface LoginType {
   Data: {

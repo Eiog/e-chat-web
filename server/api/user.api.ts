@@ -1,10 +1,10 @@
+import type { FriendFindDocument, UserFindDocument } from '../db/models'
 import { createRouter, eventHandler, readValidatedBody } from 'h3'
 import { number, object, string } from 'zod'
 import { FriendModel, UserModel } from '../db/models'
 import { isObjectId, paramsError } from '../helps'
 import { $limit, $page, $string2ObjectId, $unwind } from './pipeline'
 import { $friendProject, $friendSearchProject, $userProject } from './user.pipeline'
-import type { FriendFindDocument, UserFindDocument } from '../db/models'
 
 const router = createRouter()
 router.post('/user/update', eventHandler(async (handler) => {

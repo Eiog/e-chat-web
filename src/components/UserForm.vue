@@ -1,6 +1,6 @@
 <script setup lang='ts'>
-import { deepClone } from 'mixte'
 import type { UserFindDocument } from '~server/db/models'
+import { deepClone } from 'mixte'
 import type { UserUpdateType } from '~/api/user.api'
 
 const props = defineProps<{

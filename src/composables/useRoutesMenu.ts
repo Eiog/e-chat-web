@@ -1,6 +1,5 @@
-/* eslint-disable unicorn/consistent-function-scoping */
-import { routes } from 'vue-router/auto-routes'
 import type { MenuOption } from 'naive-ui'
+import { routes } from 'vue-router/auto-routes'
 import SvgIcon from '~/components/SvgIcon.vue'
 import { router } from '~/modules'
 

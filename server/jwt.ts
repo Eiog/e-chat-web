@@ -1,8 +1,8 @@
+import type { DecodeOptions, JwtPayload, SignOptions, VerifyOptions } from 'jsonwebtoken'
 import { createCipheriv, createDecipheriv } from 'node:crypto'
 import process from 'node:process'
 import jwt from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
-import type { DecodeOptions, JwtPayload, SignOptions, VerifyOptions } from 'jsonwebtoken'
 
 const jwtKey = process.env.PRIVATE_KEY ?? nanoid()
 const cryptoKey = process.env.CRYPTO_KEY ?? nanoid(32)
